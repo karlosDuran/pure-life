@@ -3,7 +3,7 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "06e321d9-5d72-4937-a616-5fd8b622f83f"
+    "analytics": "49194472-d9fc-43ea-844a-bbea1547a577"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -26,6 +26,7 @@
               }
             ],
             "styles": [
+              "node_modules/primeicons/primeicons.css",
               "src/styles.css"
             ]
           },
