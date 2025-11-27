@@ -20,7 +20,7 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: Aura,
         options: {
-          darkModeSelector: 'system',
+          darkModeSelector: 'none', // Forzamos modo claro para evitar problemas de contraste
           // Hemos quitado la configuración de 'cssLayer' para evitar conflictos si no usas Tailwind
         }
       }

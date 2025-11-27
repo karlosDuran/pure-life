@@ -1,0 +1,72 @@
+<div class="flex justify-center items-center min-h-screen bg-blue-50 p-4">
+    <div class="flex flex-col md:flex-row shadow-xl rounded-3xl overflow-hidden w-full"
+        style="max-width: 900px; min-height: 600px; background: white;">
+
+        <!-- Left Side: Welcome Section -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center items-center p-5 text-white relative"
+            style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+
+            <!-- Decorative Circles -->
+            <div class="absolute rounded-full opacity-10"
+                style="width: 300px; height: 300px; background: white; top: -50px; left: -50px;"></div>
+            <div class="absolute rounded-full opacity-10"
+                style="width: 200px; height: 200px; background: white; bottom: -50px; right: -50px;"></div>
+
+            <div class="z-10 text-center">
+                <h1 class="text-5xl font-bold mb-3">ÚNETE</h1>
+                <p class="text-xl mb-5 opacity-80">COMIENZA TU VIAJE</p>
+                <p class="text-sm leading-relaxed opacity-70 mb-5 px-4 hidden md:block">
+                    Crea una cuenta para acceder a funciones exclusivas y gestionar tu salud con Pure Life.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Side: Register Form -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center p-4 md:p-6 bg-white">
+            <div class="text-center mb-4">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Registrarse</h2>
+                <p class="text-gray-500 text-sm">Completa los detalles para crear tu cuenta.</p>
+            </div>
+
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-3">
+
+                <div class="mb-3">
+                    <input pInputText id="name" formControlName="name" class="w-full p-3 rounded-lg"
+                        placeholder="Nombre Completo" />
+                </div>
+
+                <div class="mb-3">
+                    <input pInputText id="email" formControlName="email" class="w-full p-3 rounded-lg"
+                        placeholder="Correo Electrónico" />
+                </div>
+
+                <div class="mb-3">
+                    <p-select [options]="roles" formControlName="role" optionLabel="label" optionValue="value"
+                        placeholder="Selecciona tu Rol" styleClass="w-full rounded-lg"></p-select>
+                </div>
+
+                <div class="mb-3 relative">
+                    <p-password id="password" formControlName="password" [feedback]="true" [toggleMask]="true"
+                        styleClass="w-full" [inputStyle]="{'width':'100%', 'padding':'1rem', 'border-radius':'0.5rem'}"
+                        placeholder="Contraseña"></p-password>
+                </div>
+
+                <div class="mb-3 relative">
+                    <p-password id="password_confirmation" formControlName="password_confirmation" [feedback]="false"
+                        [toggleMask]="true" styleClass="w-full"
+                        [inputStyle]="{'width':'100%', 'padding':'1rem', 'border-radius':'0.5rem'}"
+                        placeholder="Confirmar Contraseña"></p-password>
+                </div>
+
+                <p-button label="Registrarse" type="submit" [disabled]="registerForm.invalid"
+                    styleClass="w-full rounded-lg py-3 font-bold"
+                    [style]="{'background': '#1e3c72', 'border': 'none'}"></p-button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">¿Ya tienes una cuenta? <a routerLink="/login"
+                        class="font-bold text-blue-600 no-underline hover:underline">Inicia Sesión</a></p>
+            </div>
+        </div>
+    </div>
+</div>

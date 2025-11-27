@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
@@ -7,30 +8,8 @@ import { CardModule } from 'primeng/card';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule],
-  template: `
-    <div style="padding: 50px; display: flex; justify-content: center;">
-      <p-card header="Prueba de Conexión" [style]="{ width: '400px' }">
-        
-        <p>Estado del Backend:</p>
-        
-        <!-- Si hay datos, mostramos el mensaje de Laravel -->
-        <div *ngIf="datosBackend; else cargando">
-          <h2 style="color: green">{{ datosBackend.mensaje }}</h2>
-          <p>{{ datosBackend.servidor }}</p>
-        </div>
-
-        <!-- Si no hay datos todavía -->
-        <ng-template #cargando>
-          <p style="color: gray">Esperando respuesta del servidor...</p>
-        </ng-template>
-
-        <ng-template pTemplate="footer">
-          <p-button label="Refrescar" icon="pi pi-refresh" (onClick)="obtenerDatos()"></p-button>
-        </ng-template>
-      </p-card>
-    </div>
-  `
+  imports: [CommonModule, RouterOutlet],
+  templateUrl: './app.html'
 })
 // IMPORTANTE: Aquí cambiamos el nombre de 'AppComponent' a 'App' para que coincida con main.ts
 export class App implements OnInit {

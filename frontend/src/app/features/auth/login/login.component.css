@@ -1,0 +1,42 @@
+/* Custom styles to supplement PrimeFlex */
+.bg-blue-50 {
+    background-color: #f0f4f8;
+}
+
+.border-round-3xl {
+    border-radius: 2rem !important;
+}
+
+.opacity-10 {
+    opacity: 0.1;
+}
+
+.opacity-80 {
+    opacity: 0.8;
+}
+
+.opacity-70 {
+    opacity: 0.7;
+}
+
+.z-1 {
+    z-index: 1;
+}
+
+/* Override PrimeNG input styles for a cleaner look */
+:host ::ng-deep .p-inputtext {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    transition: all 0.2s;
+}
+
+:host ::ng-deep .p-inputtext:focus {
+    background-color: #ffffff;
+    border-color: #1e3c72;
+    box-shadow: 0 0 0 2px rgba(30, 60, 114, 0.1);
+}
+
+:host ::ng-deep .p-password-input {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}

@@ -1,0 +1,64 @@
+<div class="flex justify-center items-center min-h-screen bg-blue-50 p-4">
+    <div class="flex flex-col md:flex-row shadow-xl rounded-3xl overflow-hidden w-full"
+        style="max-width: 900px; min-height: 550px; background: white;">
+
+        <!-- Left Side: Welcome Section -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center items-center p-5 text-white relative"
+            style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+
+            <!-- Decorative Circles (Optional, for visual flair) -->
+            <div class="absolute rounded-full opacity-10"
+                style="width: 300px; height: 300px; background: white; top: -50px; left: -50px;"></div>
+            <div class="absolute rounded-full opacity-10"
+                style="width: 200px; height: 200px; background: white; bottom: -50px; right: -50px;"></div>
+
+            <div class="z-10 text-center">
+                <h1 class="text-5xl font-bold mb-3">BIENVENIDO</h1>
+                <p class="text-xl mb-5 opacity-80">PURE LIFE</p>
+                <p class="text-sm leading-relaxed opacity-70 mb-5 px-4 hidden md:block">
+                    Accede a tu cuenta para gestionar tu salud y bienestar con los mejores especialistas.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Side: Login Form -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center p-4 md:p-6 bg-white">
+            <div class="text-center mb-5">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Iniciar Sesión</h2>
+                <p class="text-gray-500 text-sm">Ingresa tus credenciales para continuar.</p>
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
+
+                <div class="mb-4">
+                    <input pInputText id="email" formControlName="email" class="w-full p-3 rounded-lg"
+                        placeholder="Correo Electrónico" />
+                </div>
+
+                <div class="mb-4 relative">
+                    <p-password id="password" formControlName="password" [feedback]="false" [toggleMask]="true"
+                        styleClass="w-full" [inputStyle]="{'width':'100%', 'padding':'1rem', 'border-radius':'0.5rem'}"
+                        placeholder="Contraseña"></p-password>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <p-checkbox [binary]="true" inputId="remember"></p-checkbox>
+                        <label for="remember" class="text-sm text-gray-600 cursor-pointer">Recordarme</label>
+                    </div>
+                    <a href="#" class="text-sm text-gray-600 no-underline hover:text-blue-600">¿Olvidaste tu
+                        contraseña?</a>
+                </div>
+
+                <p-button label="Ingresar" type="submit" [disabled]="loginForm.invalid"
+                    styleClass="w-full rounded-lg py-3 font-bold"
+                    [style]="{'background': '#1e3c72', 'border': 'none'}"></p-button>
+            </form>
+
+            <div class="mt-4 text-center">
+                <p class="text-sm text-gray-600">¿No tienes una cuenta? <a routerLink="/register"
+                        class="font-bold text-blue-600 no-underline hover:underline">Regístrate</a></p>
+            </div>
+        </div>
+    </div>
+</div>

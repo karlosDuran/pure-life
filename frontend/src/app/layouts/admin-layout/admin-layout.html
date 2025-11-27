@@ -1,0 +1,31 @@
+<div class="min-h-screen flex flex-col bg-gray-50">
+    <!-- Top Menubar -->
+    <div class="card shadow-md z-50 relative">
+        <p-menubar [model]="items">
+            <ng-template pTemplate="start">
+                <div class="flex items-center gap-2 px-2">
+                    <i class="pi pi-heart-fill text-blue-600 text-2xl"></i>
+                    <span class="font-bold text-xl text-gray-800">Pure Life Admin</span>
+                </div>
+            </ng-template>
+        </p-menubar>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 p-4 md:p-6 container mx-auto max-w-7xl">
+        <!-- Breadcrumb -->
+        <div class="mb-6">
+            <p-breadcrumb class="max-w-full" [model]="breadcrumbs" [home]="home"></p-breadcrumb>
+        </div>
+
+        <!-- Page Content -->
+        <div class="bg-white rounded-xl shadow-sm p-6 min-h-[500px]">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 p-4 text-center text-gray-500 text-sm">
+        &copy; 2025 Pure Life. Todos los derechos reservados.
+    </footer>
+</div>
