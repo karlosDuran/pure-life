@@ -6,10 +6,26 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
 import { filter } from 'rxjs/operators';
 
+import { AvatarModule } from 'primeng/avatar';
+import { InputTextModule } from 'primeng/inputtext';
+import { RippleModule } from 'primeng/ripple';
+import { BadgeModule } from 'primeng/badge';
+import { AuthService } from '../../core/services/auth.service';
+
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule, MenubarModule, BreadcrumbModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterModule,
+    MenubarModule,
+    BreadcrumbModule,
+    AvatarModule,
+    InputTextModule,
+    RippleModule,
+    BadgeModule
+  ],
   templateUrl: './admin-layout.html',
   styleUrls: ['./admin-layout.css']
 })
@@ -17,10 +33,19 @@ export class AdminLayoutComponent implements OnInit {
   items: MenuItem[] | undefined;
   home: MenuItem | undefined;
   breadcrumbs: MenuItem[] | undefined;
+  user: any = {};
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
+    this.authService.currentUser.subscribe(user => {
+      this.user = user || {};
+    });
+
     this.items = [
       {
         label: 'Dashboard',
@@ -30,32 +55,21 @@ export class AdminLayoutComponent implements OnInit {
       {
         label: 'Usuarios',
         icon: 'pi pi-users',
-        items: [
-          {
-            label: 'Lista',
-            icon: 'pi pi-list',
-            routerLink: '/admin/users'
-          },
-          {
-            label: 'Nuevo',
-            icon: 'pi pi-plus',
-            routerLink: '/admin/users/create'
-          }
-        ]
+        routerLink: '/admin/users'
       },
       {
-        label: 'Configuración',
-        icon: 'pi pi-cog',
-        routerLink: '/admin/settings'
+        label: 'Roles',
+        icon: 'pi pi-id-card',
+        routerLink: '/admin/roles'
       },
       {
-        label: 'Cerrar Sesión',
-        icon: 'pi pi-sign-out',
-        command: () => this.logout()
+        label: 'Menús',
+        icon: 'pi pi-list',
+        routerLink: '/admin/menus'
       }
     ];
 
-    this.home = { icon: 'pi pi-home', routerLink: '/admin/dashboard' };
+    this.home = { icon: 'pi pi-home', routerLink: ['/admin/dashboard'] };
 
     // Listen to route changes to update breadcrumbs
     this.router.events
@@ -95,6 +109,7 @@ export class AdminLayoutComponent implements OnInit {
   logout() {
     // Implement logout logic here
     console.log('Logging out...');
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 }

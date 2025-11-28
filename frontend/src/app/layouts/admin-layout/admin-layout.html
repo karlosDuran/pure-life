@@ -1,25 +1,49 @@
 <div class="min-h-screen flex flex-col bg-gray-50">
     <!-- Top Menubar -->
-    <div class="card shadow-md z-50 relative">
-        <p-menubar [model]="items">
-            <ng-template pTemplate="start">
+    <div class="p-4 z-50 relative">
+        <p-menubar [model]="items" styleClass="rounded-2xl shadow-lg border-0 bg-white/90 backdrop-blur-md">
+            <ng-template #start>
                 <div class="flex items-center gap-2 px-2">
-                    <i class="pi pi-heart-fill text-blue-600 text-2xl"></i>
+                    <img src="/images/pure-life.png" alt="Pure Life Admin" class="h-10 w-auto">
                     <span class="font-bold text-xl text-gray-800">Pure Life Admin</span>
+                </div>
+            </ng-template>
+            <ng-template #item let-item let-root="root">
+                <a pRipple
+                    class="flex items-center p-menubar-item-link cursor-pointer px-4 py-2 hover:bg-gray-100 rounded-md transition-colors duration-200"
+                    [routerLink]="item.routerLink" (click)="item.command ? item.command() : null">
+                    <i [class]="item.icon" class="mr-2 text-gray-600"></i>
+                    <span class="text-gray-700 font-medium">{{ item.label }}</span>
+                    <p-badge *ngIf="item.badge" [ngClass]="{ 'ml-auto': !root, 'ml-2': root }" [value]="item.badge" />
+                    <span *ngIf="item.shortcut"
+                        class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{
+                        item.shortcut }}</span>
+                    <i *ngIf="item.items" [ngClass]="['ml-auto pi', root ? 'pi-angle-down' : 'pi-angle-right']"
+                        class="text-gray-400 text-sm"></i>
+                </a>
+            </ng-template>
+            <ng-template #end>
+                <div class="flex items-center gap-4">
+                    <p-avatar
+                        [image]="user?.profile_photo_path ? 'http://localhost:8000/storage/' + user.profile_photo_path : 'https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png'"
+                        shape="circle"
+                        styleClass="w-10 h-10 border-2 border-white shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+                        routerLink="/admin/profile" />
                 </div>
             </ng-template>
         </p-menubar>
     </div>
 
     <!-- Main Content Area -->
-    <div class="flex-1 p-4 md:p-6 container mx-auto max-w-7xl">
+    <div class="flex-1 px-4 pb-4 md:px-6 md:pb-6 container mx-auto max-w-7xl">
         <!-- Breadcrumb -->
         <div class="mb-6">
-            <p-breadcrumb class="max-w-full" [model]="breadcrumbs" [home]="home"></p-breadcrumb>
+            <p-breadcrumb class="max-w-full bg-transparent border-none p-0" [model]="breadcrumbs"
+                [home]="home"></p-breadcrumb>
         </div>
 
         <!-- Page Content -->
-        <div class="bg-white rounded-xl shadow-sm p-6 min-h-[500px]">
+        <div class="bg-white rounded-2xl shadow-sm p-6 min-h-[500px]">
             <router-outlet></router-outlet>
         </div>
     </div>

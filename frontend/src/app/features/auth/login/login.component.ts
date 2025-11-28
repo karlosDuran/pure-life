@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, FormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { AuthService } from '../../../core/services/auth.service';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -26,13 +28,21 @@ import { Router, RouterModule } from '@angular/router';
         FormsModule,
         CheckboxModule
     ],
+    providers: [MessageService], // Added for MessageService
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
     loginForm: FormGroup;
+    loading: boolean = false; // Added loading property
 
-    constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+    constructor(
+        private fb: FormBuilder,
+        private http: HttpClient,
+        private router: Router,
+        private messageService: MessageService, // Injected MessageService
+        private authService: AuthService // Injected AuthService
+    ) {
         this.loginForm = this.fb.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
@@ -41,18 +51,18 @@ export class LoginComponent {
 
     onSubmit() {
         if (this.loginForm.valid) {
-            this.http.post<any>('http://localhost:8000/api/login', this.loginForm.value).subscribe({
-                next: (response) => {
-                    console.log('Login successful', response);
-                    // Store token (if applicable, though Sanctum cookie might be used)
-                    // Assuming response contains user object with role
-                    const user = response.user || response; // Adjust based on actual API response structure
+            this.loading = true; // Set loading to true
+            this.http.post('http://localhost:8000/api/login', this.loginForm.value).subscribe({
+                next: (response: any) => { // Changed type to any
+                    this.authService.updateUser(response.user, response.access_token); // Use AuthService to update user and token
+                    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login Successful' }); // Show success message
+                    this.loading = false; // Set loading to false
 
-                    if (user.role === 'admin' || user.role === 'nutriologo') {
+                    // Redirect based on role
+                    if (response.user.role === 'admin' || response.user.role === 'nutriologo') {
                         this.router.navigate(['/admin/dashboard']);
                     } else {
-                        // Redirect to user dashboard or home
-                        this.router.navigate(['/']);
+                        this.router.navigate(['/user/calculation']);
                     }
                 },
                 error: (error) => {

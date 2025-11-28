@@ -23,6 +23,14 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'profile_photo_path',
+        'weight',
+        'height',
+        'age',
+        'gender',
+        'activity_level',
+        'target_calories',
+        'excluded_foods',
     ];
 
     /**
@@ -45,6 +53,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'excluded_foods' => 'array',
         ];
     }
 }

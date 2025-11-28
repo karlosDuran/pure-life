@@ -1,0 +1,116 @@
+<div class="card">
+    <p-toast></p-toast>
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+    <p-table #dt [value]="menus" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['name','type','calories','breakfast','lunch','dinner','snack']"
+        [tableStyle]="{'min-width': '75rem'}" [rowHover]="true" dataKey="id"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} menús" [showCurrentPageReport]="true"
+        [loading]="loading">
+        <ng-template pTemplate="caption">
+            <div class="flex justify-between items-center">
+                <h5 class="m-0 text-xl font-bold text-gray-800">Gestión de Menús</h5>
+                <div class="flex items-center gap-3">
+                    <p-iconfield iconPosition="left">
+                        <p-inputicon>
+                            <i class="pi pi-search"></i>
+                        </p-inputicon>
+                        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                            placeholder="Buscar..." />
+                    </p-iconfield>
+                    <button pButton pRipple label="Nuevo" icon="pi pi-plus" class="p-button-success"
+                        (click)="openNew()"></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="name" style="min-width:15rem">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                <th style="min-width:10rem">Desayuno</th>
+                <th style="min-width:10rem">Almuerzo</th>
+                <th style="min-width:10rem">Cena</th>
+                <th style="min-width:10rem">Colación</th>
+                <th pSortableColumn="calories" style="min-width:8rem">Calorías <p-sortIcon
+                        field="calories"></p-sortIcon></th>
+                <th pSortableColumn="type" style="min-width:10rem">Tipo <p-sortIcon field="type"></p-sortIcon></th>
+                <th style="min-width:10rem">Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-menu>
+            <tr>
+                <td>{{menu.name}}</td>
+                <td>{{menu.breakfast}}</td>
+                <td>{{menu.lunch}}</td>
+                <td>{{menu.dinner}}</td>
+                <td>{{menu.snack}}</td>
+                <td>{{menu.calories}} kcal</td>
+                <td><p-tag [value]="menu.type" [severity]="getSeverity(menu.type)"></p-tag></td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                        (click)="editMenu(menu)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                        (click)="deleteMenu(menu)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-dialog [(visible)]="menuDialog" [style]="{width: '600px'}" header="Detalles del Menú" [modal]="true"
+        styleClass="p-fluid rounded-xl" [draggable]="false" [resizable]="false">
+        <ng-template pTemplate="content">
+            <div class="flex flex-col gap-4 pt-4">
+                <div class="field">
+                    <label for="name" class="block font-medium text-gray-700 mb-1">Nombre</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="menu.name" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !menu.name">El nombre es requerido.</small>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="field">
+                        <label for="breakfast" class="block font-medium text-gray-700 mb-1">Desayuno</label>
+                        <input type="text" pInputText id="breakfast" [(ngModel)]="menu.breakfast" required />
+                        <small class="p-error" *ngIf="submitted && !menu.breakfast">Requerido.</small>
+                    </div>
+                    <div class="field">
+                        <label for="lunch" class="block font-medium text-gray-700 mb-1">Almuerzo</label>
+                        <input type="text" pInputText id="lunch" [(ngModel)]="menu.lunch" required />
+                        <small class="p-error" *ngIf="submitted && !menu.lunch">Requerido.</small>
+                    </div>
+                    <div class="field">
+                        <label for="dinner" class="block font-medium text-gray-700 mb-1">Cena</label>
+                        <input type="text" pInputText id="dinner" [(ngModel)]="menu.dinner" required />
+                        <small class="p-error" *ngIf="submitted && !menu.dinner">Requerido.</small>
+                    </div>
+                    <div class="field">
+                        <label for="snack" class="block font-medium text-gray-700 mb-1">Colación</label>
+                        <input type="text" pInputText id="snack" [(ngModel)]="menu.snack" required />
+                        <small class="p-error" *ngIf="submitted && !menu.snack">Requerido.</small>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="field">
+                        <label for="calories" class="block font-medium text-gray-700 mb-1">Calorías</label>
+                        <input type="number" pInputText id="calories" [(ngModel)]="menu.calories" required />
+                        <small class="p-error" *ngIf="submitted && !menu.calories">Requerido.</small>
+                    </div>
+                    <div class="field">
+                        <label for="type" class="block font-medium text-gray-700 mb-1">Tipo</label>
+                        <p-select [options]="types" [(ngModel)]="menu.type" optionLabel="label" optionValue="value"
+                            placeholder="Seleccionar tipo" appendTo="body"></p-select>
+                        <small class="p-error" *ngIf="submitted && !menu.type">Requerido.</small>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <div class="flex justify-end gap-2 mt-4">
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+                    (click)="saveMenu()"></button>
+            </div>
+        </ng-template>
+    </p-dialog>
+</div>
