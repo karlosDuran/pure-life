@@ -1,0 +1,50 @@
+<div class="min-h-screen flex flex-col bg-green-50">
+    <!-- Top Menubar -->
+    <div class="p-4 z-50 relative">
+        <p-menubar [model]="items" styleClass="rounded-2xl shadow-lg border-0 bg-white/90 backdrop-blur-md">
+            <ng-template #start>
+                <div class="flex items-center gap-2 px-2">
+                    <img src="/images/pure-life.png" alt="Pure Life Nutritionist" class="h-10 w-auto">
+                    <span class="font-bold text-xl text-gray-800">Pure Life <span
+                            class="text-green-600">Nutriólogo</span></span>
+                </div>
+            </ng-template>
+            <ng-template #item let-item let-root="root">
+                <a pRipple
+                    class="flex items-center p-menubar-item-link cursor-pointer px-4 py-2 hover:bg-gray-100 rounded-md transition-colors duration-200"
+                    [routerLink]="item.routerLink" (click)="item.command ? item.command() : null">
+                    <i [class]="item.icon" class="mr-2 text-gray-600"></i>
+                    <span class="text-gray-700 font-medium">{{ item.label }}</span>
+                </a>
+            </ng-template>
+            <ng-template #end>
+                <div class="flex items-center gap-4">
+                    <p-avatar
+                        [image]="user?.profile_photo_path ? 'http://localhost:8000/storage/' + user.profile_photo_path : undefined"
+                        [icon]="!user?.profile_photo_path ? 'pi pi-user' : undefined" shape="circle"
+                        styleClass="w-10 h-10 border-2 border-white shadow-sm cursor-pointer hover:shadow-md transition-shadow bg-green-100 text-green-700"
+                        routerLink="/nutritionist/profile" />
+                </div>
+            </ng-template>
+        </p-menubar>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 px-4 pb-4 md:px-6 md:pb-6 container mx-auto max-w-7xl">
+        <!-- Breadcrumb -->
+        <div class="mb-6">
+            <p-breadcrumb class="max-w-full bg-transparent border-none p-0" [model]="breadcrumbs"
+                [home]="home"></p-breadcrumb>
+        </div>
+
+        <!-- Page Content -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 min-h-[500px]">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 p-4 text-center text-gray-500 text-sm">
+        &copy; 2025 Pure Life. Panel de Nutriólogo.
+    </footer>
+</div>

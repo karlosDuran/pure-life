@@ -46,10 +46,17 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
 
+            $redirectUrl = match ($user->role) {
+                'admin' => '/admin/dashboard',
+                'nutriologo' => '/nutritionist/menus',
+                default => '/user/calculation',
+            };
+
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
                 'user' => $user,
+                'redirect_url' => $redirectUrl,
             ]);
         }
 

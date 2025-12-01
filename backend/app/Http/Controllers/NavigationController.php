@@ -14,7 +14,7 @@ class NavigationController extends Controller
 
         $routes = [];
 
-        if ($role === 'admin' || $role === 'nutriologo') {
+        if ($role === 'admin') {
             $routes = [
                 [
                     'label' => 'Dashboard',
@@ -40,6 +40,19 @@ class NavigationController extends Controller
                     'label' => 'Mi Perfil',
                     'icon' => 'pi pi-user',
                     'routerLink' => '/admin/profile'
+                ]
+            ];
+        } elseif ($role === 'nutriologo') {
+            $routes = [
+                [
+                    'label' => 'Menús',
+                    'icon' => 'pi pi-list',
+                    'routerLink' => '/nutritionist/menus'
+                ],
+                [
+                    'label' => 'Mi Perfil',
+                    'icon' => 'pi pi-user',
+                    'routerLink' => '/nutritionist/profile'
                 ]
             ];
         } elseif ($role === 'usuario') {

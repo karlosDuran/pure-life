@@ -58,10 +58,11 @@ export class LoginComponent {
                     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login Successful' }); // Show success message
                     this.loading = false; // Set loading to false
 
-                    // Redirect based on role
-                    if (response.user.role === 'admin' || response.user.role === 'nutriologo') {
-                        this.router.navigate(['/admin/dashboard']);
+                    // Redirect based on backend response
+                    if (response.redirect_url) {
+                        this.router.navigate([response.redirect_url]);
                     } else {
+                        // Fallback
                         this.router.navigate(['/user/calculation']);
                     }
                 },

@@ -16,7 +16,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
-    selector: 'app-menus',
+    selector: 'app-nutritionist-menus',
     standalone: true,
     imports: [
         CommonModule,
@@ -34,10 +34,10 @@ import { InputIconModule } from 'primeng/inputicon';
         InputIconModule
     ],
     providers: [MessageService, ConfirmationService],
-    templateUrl: './menus.html',
-    styleUrls: ['./menus.css']
+    templateUrl: './nutritionist-menus.html',
+    styleUrls: ['./nutritionist-menus.css']
 })
-export class MenusComponent implements OnInit {
+export class NutritionistMenusComponent implements OnInit {
     menus: any[] = [];
     menu: any = {};
     submitted: boolean = false;
@@ -65,7 +65,7 @@ export class MenusComponent implements OnInit {
             next: (data) => {
                 this.menus = data;
                 this.loading = false;
-                this.cd.detectChanges(); // Fix ExpressionChangedAfterItHasBeenCheckedError
+                this.cd.detectChanges();
             },
             error: (error) => {
                 console.error('Error fetching menus', error);
@@ -97,6 +97,7 @@ export class MenusComponent implements OnInit {
                         this.menus = this.menus.filter((val) => val.id !== menu.id);
                         this.menu = {};
                         this.messageService.add({ severity: 'success', summary: 'Exitoso', detail: 'Menú Eliminado', life: 3000 });
+                        this.cd.detectChanges();
                     },
                     error: (error) => {
                         console.error('Error deleting menu', error);
@@ -125,6 +126,7 @@ export class MenusComponent implements OnInit {
                         this.menus = [...this.menus];
                         this.menuDialog = false;
                         this.menu = {};
+                        this.cd.detectChanges();
                     },
                     error: (error) => {
                         console.error('Error updating menu', error);
@@ -139,6 +141,7 @@ export class MenusComponent implements OnInit {
                         this.menus = [...this.menus];
                         this.menuDialog = false;
                         this.menu = {};
+                        this.cd.detectChanges();
                     },
                     error: (error) => {
                         console.error('Error creating menu', error);
