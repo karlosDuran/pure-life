@@ -45,7 +45,7 @@ export class NutritionistMenusComponent implements OnInit {
     loading: boolean = true;
     types: any[] = [
         { label: 'Vegetariana', value: 'vegetariana' },
-        { label: 'Omnívora', value: 'omnivora' }
+        { label: 'Omnívoro', value: 'omnivora' }
     ];
 
     constructor(

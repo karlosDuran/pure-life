@@ -44,7 +44,9 @@
                 <td>{{menu.dinner}}</td>
                 <td>{{menu.snack}}</td>
                 <td>{{menu.calories}} kcal</td>
-                <td><p-tag [value]="menu.type" [severity]="getSeverity(menu.type)"></p-tag></td>
+                <td><p-tag
+                        [value]="menu.type === 'omnivora' ? 'Omnívoro' : (menu.type === 'vegetariana' ? 'Vegetariana' : menu.type)"
+                        [severity]="getSeverity(menu.type)"></p-tag></td>
                 <td>
                     <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                         (click)="editMenu(menu)"></button>
